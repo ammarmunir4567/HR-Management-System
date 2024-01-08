@@ -11,7 +11,8 @@ const port = process.env.PORT || 3002;
 app.use(cors());
 app.use(express.json());
 
-const uri = "mongodb+srv://l201150:probook4520@cluster0.h1jztek.mongodb.net/?retryWrites=true&w=majority";
+ const uri = "mongodb+srv://l201150:probook4520@cluster0.h1jztek.mongodb.net/?retryWrites=true&w=majority";
+// const uri="mongodb+srv://Hashim:Galadhrim154$@talenttrac.4fdeqma.mongodb.net/?retryWrites=true&w=majority"
 mongoose.connect(uri, { useNewUrlParser: true });
 
 const connection = mongoose.connection;
@@ -29,9 +30,10 @@ const complainRouter=require('../api/Route/Complain');
 app.use('/Complain',complainRouter)
 const leaveRouter=require('../api/Route/Leave');
 app.use('/Leave',leaveRouter)
-
 const eventRouter=require('../api/Route/Event');
 app.use('/Event',eventRouter)
+const contactRouter=require("../api/Route/Contact");
+app.use('/Contact',contactRouter)
 
 
 

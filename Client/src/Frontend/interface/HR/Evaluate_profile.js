@@ -11,6 +11,17 @@ const PerformanceEvaluation = () => {
     const [rating, setRating] = useState(5);
     const [description, setDescription] = useState('');
     const [month, setMonth] = useState('');
+    const[ratingError,setRatingError]=useState('');
+
+
+    function RatingCheck(amount){
+        if(amount<0){
+            setRatingError("Rating can not be of negative");
+        }
+        else{
+            setRatingError("")
+        }
+      }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -48,7 +59,7 @@ const PerformanceEvaluation = () => {
               <Menubar />
         <div className="container mx-auto p-4 flex justify-center items-center min-h-screen">
             <div className="max-w-lg w-full bg-white p-6 border border-gray-200 rounded-lg shadow-lg">
-                <h2 className="text-3xl font-semibold text-center text-blue-600 mb-6">Performance Evaluation</h2>
+                <h2 className="text-3xl font-semibold text-center text-purple-600 mb-6">Performance Evaluation</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <h3 className="text-xl font-bold text-gray-800 mb-2">{employee.bar.person.name}'s Evaluation</h3>
@@ -70,11 +81,13 @@ const PerformanceEvaluation = () => {
                         <input 
                             type="number" 
                             id="rating" 
+                            
                             value={rating} 
-                            onChange={(e) => setRating(e.target.value)} 
+                            onChange={(e) =>{ setRating(e.target.value) , RatingCheck(e.target.value)}} 
                             min="1" max="10"
                             className="block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                         />
+                        <span className="error-message ml-2" id="no-error" style={{ textAlign: 'center', color:"red" }} value={ratingError}>{ratingError}</span>
                     </div>
 
                     <div>
@@ -89,7 +102,7 @@ const PerformanceEvaluation = () => {
                     </div>
 
                     <div>
-                        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-200 ease-in-out">
+                        <button type="submit" className="w-full bg-purple-500 text-white py-2 rounded-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-200 ease-in-out">
                             Submit Evaluation
                         </button>
                     </div>

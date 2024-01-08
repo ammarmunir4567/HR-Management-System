@@ -60,48 +60,48 @@ function addTeamHandler(){
           </a>
           <Sidebar/>
         </aside>
-
         <div className="flex-grow text-gray-800">
           <Menubar/>
-    <div className="max-w-lg mx-auto my-10 p-8 border rounded shadow-lg">
-      <form onSubmit={addTeamHandler}>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="teamName">
-            Team Name
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="teamName"
-            type="text"
-            placeholder="Enter team name"
-            value={teamName}
-            onChange={(e) => setTeamName(e.target.value)}
-          />
+          <div className="max-w-lg mx-auto my-10 p-8 border rounded shadow-lg">
+            <form onSubmit={addTeamHandler}>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="teamName">
+                  Team Name
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="teamName"
+                  type="text"
+                  placeholder="Enter team name"
+                  value={teamName}
+                  onChange={(e) => setTeamName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+                  Description
+                </label>
+                <textarea
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                  id="description"
+                  placeholder="Enter a brief description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                ></textarea>
+              </div>
+              <div className="flex items-center justify-between">
+                <button
+                  className="bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="submit"
+                >
+                  Add Team
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="mb-6">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
-            Description
-          </label>
-          <textarea
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            id="description"
-            placeholder="Enter a brief description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          ></textarea>
-        </div>
-        <div className="flex items-center justify-between">
-          <button
-            className="bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-            onClick={addTeamHandler}
-          >
-            Add Team
-          </button>
-        </div>
-      </form>
-    </div>
-    </div>
       </body>
     </>
   );

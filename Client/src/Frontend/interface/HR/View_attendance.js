@@ -3,6 +3,9 @@ import Sidebar from '../../Components/Sidebar';
 import Menubar from '../../Components/Menubar';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 const ViewAttendance = () => {
   const location = useLocation();
@@ -31,6 +34,27 @@ const ViewAttendance = () => {
     return attendanceRecord?.status || 'No Status';
   };
 
+  const downloadAttendancePdf = () => {
+    const input = document.getElementById('attendanceTable');
+    const scale = 2; // Increase this value to increase the resolution
+  
+    html2canvas(input, { scale: scale })
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF({
+          orientation: 'landscape', // Consider adjusting the orientation if needed
+        });
+        const imgProps= pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save("attendance.pdf");
+      })
+      .catch(err => console.error('Error generating PDF', err));
+  };
+  
+  
+
   return (
     <>
       <div className="flex bg-gray-100  md:min-h-screen">
@@ -55,12 +79,12 @@ const ViewAttendance = () => {
           <Menubar />
           <div className="container mx-auto p-8">
             <h1 className="text-2xl font-semibold mb-6">Attendance Management</h1>
-            <table className="min-w-full divide-y divide-gray-200">
+            <table id="attendanceTable" className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {/* <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     ID
-                  </th>
+                  </th> */}
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Name
                   </th>
@@ -75,18 +99,25 @@ const ViewAttendance = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {employees.map((employee) => (
                   <tr key={employee._id}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{employee._id}</td>
+                    {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{employee._id}</td> */}
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{employee.name}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{passedDate}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <span>{findAttendanceStatus(employee, passedDate)}</span>
                     </td>
+  
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+          <button  onClick={downloadAttendancePdf} className="bg-purple-500 ml-10 text-white px-4 py-2 rounded-md">
+  Download PDF
+</button>  
         </div>
+
+      
+
       </div>
     </>
   );

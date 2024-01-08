@@ -72,9 +72,7 @@ export default function Info() {
   };
 
 
-  useEffect(() => {
-    showSlides();
-  }, []);
+
 
 
   const calculateDaysLeft = () => {
@@ -87,14 +85,19 @@ export default function Info() {
 
 
   const calculateUnderperformingCount = (employeeData) => {
+    
     // Calculate the number of underperforming employees with an average rating below 5
     const underperformingEmployees = employeeData.filter(employee => {
-      const avgRating = calculateAverageRating(employee.Reviews); // Use 'Reviews' instead of 'reviews'
+      
+      const avgRating = calculateAverageRating(employee.reviews);
+      console.log(avgRating) // Use 'Reviews' instead of 'reviews'
       return avgRating < 5;
     });
     setUnderperformingCount(underperformingEmployees.length);
+    console.log(underperformingCount)
   };
   
+
 
   const calculateAverageRating = (reviews) => {
     if (reviews.length === 0) {
@@ -102,9 +105,15 @@ export default function Info() {
     }
 
     const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+
     return totalRating / reviews.length;
   };
 
+  useEffect(() => {
+    showSlides();
+    // Pass the Employee state to the calculateUnderperformingCount function
+    calculateUnderperformingCount(Employee);
+}, [Employee]);
   return (
     <>
        <main className="p-6 sm:p-10 space-y-6">
@@ -324,10 +333,10 @@ export default function Info() {
         <img src={`https://randomuser.me/api/portraits/${emp.gender === 'Male' ? 'men' : 'women'}/${index}.jpg`} alt={`${emp.name} profile`} />
       </div>
       <span className="text-gray-600">{emp.name}</span>
-      
-      {emp.avgRating !== undefined && (
+      <span className="ml-auto font-semibold">{emp.avgRating}</span>
+      {/* {emp.avgRating !== undefined && (
         <span className="ml-auto font-semibold">{emp.avgRating.toFixed(1)}</span>
-      )}
+      )} */}
     </li>
   ))}
 </ul>

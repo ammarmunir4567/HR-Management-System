@@ -19,12 +19,76 @@ const AddEmployee = () => {
   const [gender, setGender] = useState("");
   const [doj, setDoj] = useState("");
   const [salary, setSalary] = useState("");
-
   const [teamList, setTeamList] = useState([]);
   const [roleList, setRoleList] = useState(["Internee", "Software Engineer", "Associate SE"]);
   const [disabled, setDisabled] = useState(false);
 
+  const [nameError, setNameError] = useState('');
+  const [numberError, setNumberError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [SalaryError, setSalaryError] = useState('');
+
   const [teams, setTeams] = useState([]);
+
+  function SalaryCheck(amount){
+    if(amount<0){
+      setSalaryError("Salary can not be of negative")
+    }
+    else{
+      setSalaryError("")
+    }
+  }
+
+  function containsNumber(inputString) {
+    if (inputString == "") {
+      setNameError('name is required*');
+    } else {
+      setNameError('');
+      if (inputString.length >= 3) {
+        for (let i = 0; i < inputString.length; i++) {
+          if (!isNaN(inputString[i]) && inputString[i] !== " ") {
+            setNameError('use alphabets only*');
+            return 0;
+          }
+        }
+        return 1;
+      } else {
+        setNameError('name must be greater then length 3*');
+        return 0;
+      }
+    }
+  }
+
+  const validatePhoneNumber = (phone) => {
+
+    if (phoneNo==""){
+      setNumberError("Phone number is required*")
+    }
+    else if(phone.length!=11){
+      setNumberError("Phone number should be of 11 digits")
+    }
+    else{
+      setNumberError("")
+    }
+  };
+
+  function validateEmail(email) {
+    if (email == "") {
+      setEmailError("email is required*");
+    } else {
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      const x = emailPattern.test(email);
+
+      if (x == false) {
+        setEmailError("Email syntax is not correct.*");
+        return 0;
+      } else {
+        setEmailError("");
+        return 1;
+      }
+    }
+  }
+  
 
   useEffect(() => {
     axios.get('http://localhost:3002/Team/')
@@ -151,9 +215,12 @@ const AddEmployee = () => {
               type="text"
               name="name"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {setName(e.target.value)
+                containsNumber(e.target.value);
+              }}
               required
             />
+            <span  className="error-message  ml-2" id="name-error" style={{ textAlign: 'center',color:"red" }} value={nameError}  >{nameError}</span>
           </div>
 
           <div>
@@ -166,9 +233,13 @@ const AddEmployee = () => {
               type="email"
               name="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                validateEmail(e.target.value);
+              }}
               required
             />
+            <span className="error-message ml-2" id="email-error" style={{ textAlign: 'center' ,color:"red"}} value={emailError} >{emailError}</span>
           </div>
         </div>
 
@@ -196,10 +267,12 @@ const AddEmployee = () => {
               id="phoneNo"
               type="number"
               name="phoneNo"
+              min="0"
               value={phoneNo}
-              onChange={(e) => setPhoneNo(e.target.value)}
-              required
+              onChange={(e) => {setPhoneNo(e.target.value) ,validatePhoneNumber(e.target.value)}}
+              required="required"
             />
+  <span className="error-message ml-2" id="no-error" style={{ textAlign: 'center', color:"red" }} value={numberError}>{numberError}</span>
           </div>
 
           <div>
@@ -211,11 +284,14 @@ const AddEmployee = () => {
               id="salary"
               type="number"
               name="salary"
+              min="0"
               value={salary}
-              onChange={(e) => setSalary(e.target.value)}
+              onChange={(e) => {setSalary(e.target.value), SalaryCheck(e.target.value);}}
               required
             />
+              <span className="error-message ml-2" id="no-error" style={{ textAlign: 'center', color:"red" }} value={SalaryError}>{SalaryError}</span>
           </div>
+
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

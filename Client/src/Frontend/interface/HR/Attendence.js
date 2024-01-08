@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '../../Components/Sidebar';
 import Menubar from '../../Components/Menubar';
 import { useLocation } from 'react-router-dom';
+
 import axios from 'axios';
 
 const Attendance = () => {
