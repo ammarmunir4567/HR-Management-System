@@ -1,8 +1,5 @@
-To include the requirement for using a personal MongoDB Atlas API URL, I'll add a section under "Installation" that highlights the necessity of configuring your own database connection string. This emphasizes the importance of setting up an external MongoDB Atlas database for storing the application data.
 
----
-
-# HR Management System
+# TalentTrac (HR Management System)
 
 ## Introduction
 The HR Management System is a web application designed to simplify and automate HR tasks, offering features like an interactive dashboard, employee management, attendance tracking, leave management, event management, team management, and complain management. It provides an all-in-one platform for HR departments to enhance their operational efficiency.
