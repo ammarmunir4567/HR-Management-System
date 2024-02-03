@@ -1,4 +1,8 @@
 
+
+https://github.com/ammarmunir4567/HR-Management-System/assets/105548542/688e138e-e2bb-4d20-bb3d-aaf0f96d3edd
+
+
 # TalentTrac (HR Management System)
 
 ## Introduction
