@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import img1 from '../Assets/ammar.jpeg';
-import img3 from '../Assets/rabiya.png';
+import img3 from '../Assets/rabiya.jpeg';
 import { setEmployee } from '../Redux/Slice/addEmployeeSlice';
 
 export default function Info() {
